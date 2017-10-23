@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   def hello
-  	@time = Time.now
+  	@time = Date.today
+  end
+  def goodbye
+  	@tomorrow = Date.today + 1.day
   end
 end
