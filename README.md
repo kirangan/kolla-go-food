@@ -39,10 +39,12 @@ I using Ubuntu 14.04(Trusty).
 
 - Open app/views/home/hello.html.erb
   Rails also already write some html text, delete it, we will use a new text
+  ```
   	<h1>Hello from Go-Food!</h1>
 	<p>
   	It is now <%= @time %>
 	</p>
+	```
 
 - Show in your browser with write in console, rails server or rails s, open in localhost:3000/hello. And you can see your new interface.
 
@@ -73,6 +75,7 @@ I using Ubuntu 14.04(Trusty).
 	- @users = User.all
 
 - Then edit hello.html.erb
+```
 	<p>
 	List of user: 
 	</p>
@@ -81,5 +84,5 @@ I using Ubuntu 14.04(Trusty).
 		<li><%= user.username%> - <%= user.full_name %></li>
 		<% end %>
 	</ul>
-
+```
 - Save it, write rails server, and open http://localhost:3000/home/hello
