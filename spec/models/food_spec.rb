@@ -2,48 +2,39 @@ require 'rails_helper'
 
 describe Food do
 	it "is valid with a name and description" do
-		expect(FactoryGirl.build(:food)).to be_valid
+		expect(build(:food)).to be_valid
 	end
 
   it "is invalid without a name" do
-    food = FactoryGirl.build(:food, name: nil)
+    food = build(:food, name: nil)
     food.valid?
     expect(food.errors[:name]).to include("can't be blank")
   end
 
   it "is invalid without a description" do
-    food = FactoryGirl.build(:food, description: nil)
+    food = build(:food, description: nil)
     food.valid?
     expect(food.errors[:description]).to include("can't be blank")
   end
 
 	it "is invalid with a duplicate name" do
-    food1 = FactoryGirl.create(:food, name: "Nasi Goreng")
-    food2 = FactoryGirl.build(:food, name: "Nasi Goreng")
+    food1 = create(:food, name: "Nasi Goreng")
+    food2 = build(:food, name: "Nasi Goreng")
 
     food2.valid?
     expect(food2.errors[:name]).to include("has already been taken")
   end
 
   it "is invalid with non numerical values price" do
-    food = FactoryGirl.build(:food, price: "100rb")
+    food = build(:food, price: "100rb")
     food.valid?
     expect(food.errors[:price]).to include("is not a number")
   end
 
   it "is invalid with price less than 0.01" do
-    food = FactoryGirl.build(:food, price: 0.00)
+    food = build(:food, price: 0.00)
     food.valid?
     expect(food.errors[:price]).to include("must be greater than or equal to 0.01")
-  end
-
-  it "is valid with price" do
-    food = Food.new(
-      name: "Nasi uduk",
-      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-      price: 10000.0
-      )
-    expect(food).to be_valid
   end
 
   it "is invalid image url, must be ends with '.gif', '.jpg', and '.png'" do
