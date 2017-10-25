@@ -45,4 +45,42 @@ describe Food do
     expect(food2.errors[:name]).to include("has already been taken")
   end
 
+  it "returns a sorted array of results that match" do
+    food1 = Food.create(
+      name: "Nasi uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: 10000.0
+      )
+    food2 = Food.create(
+      name: "Kerak Telor",
+      description: "Betawi traditional spicy omelette made from glutinous rice cooked bla bla bla",
+      price: 8000.0
+      )
+    food3 = Food.create(
+      name: "Nasi Semur Jengkol",
+      description: "Based on dongfruit, this menu promises i don't know ",
+      price: 8000.0
+      )
+    expect(Food.by_letter("N")).to eq([food3, food1])
+  end
+
+  it "omits results that do not match" do
+    food1 = Food.create(
+      name: "Nasi uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: 10000.0
+      )
+    food2 = Food.create(
+      name: "Kerak Telor",
+      description: "Betawi traditional spicy omelette made from glutinous rice cooked bla bla bla",
+      price: 8000.0
+      )
+    food3 = Food.create(
+      name: "Nasi Semur Jengkol",
+      description: "Based on dongfruit, this menu promises i don't know ",
+      price: 8000.0
+      )
+    expect(Food.by_letter("N")).not_to eq(food2)
+  end
+
 end
