@@ -4,8 +4,6 @@ class Buyer < ApplicationRecord
 		with: /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
 		message: 'must be valid email format'
 	}
-	validates :phone, format: { 
-		with: /\d{12}/,
-		message: 'phone format is invalid'
-	}
+	validates :phone, numericality: true, length: { in: 9..12 } 
+	
 end
