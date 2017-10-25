@@ -10,24 +10,29 @@ describe Food do
 		expect(food).to be_valid
 	end
 
-	it "is invalid without a name" do
-    food = Food.new(
+  describe "presence of name and description" do
+    before :each do
+      @food = Food.new(
       name: nil,
-      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-      price: 10000.0
-      )
-    food.valid?
-    expect(food.errors[:name]).to include("can't be blank")
-  end
-
-	it "is invalid without a description" do
-    food = Food.new(
-      name: "Nasi uduk",
       description: nil,
       price: 10000.0
       )
-    food.valid?
-    expect(food.errors[:description]).to include("can't be blank")
+    end
+
+    context "with name" do
+      it "is invalid without a name" do
+        @food.valid?
+        expect(@food.errors[:name]).to include("can't be blank")
+      end
+    end
+
+    context "with description" do
+      it "is invalid without a description" do
+        @food.valid?
+        expect(@food.errors[:description]).to include("can't be blank")
+      end
+    end
+
   end
 
 	it "is invalid with a duplicate name" do
@@ -43,6 +48,37 @@ describe Food do
       )
     food2.valid?
     expect(food2.errors[:name]).to include("has already been taken")
+  end
+
+  it "is invalid with non numerical values price" do
+    food = Food.new(
+      name: "Nasi uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: "10ribu"
+      )
+    food.valid?
+    expect(food.errors[:price]).to include("is not a number")
+  end
+
+  it "is invalid with price less than 0.01" do
+    food = Food.new(
+      name: "Nasi uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: 0.0
+      )
+    food.valid?
+    expect(food.errors[:price]).to include("must be greater than or equal to #{0.01}")
+  end
+
+  it "is invalid image url, must be ends with '.gif', '.jpg', and '.png'" do
+    food = Food.new(
+      name: "Nasi uduk",
+      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
+      price: 10000.0,
+      image_url: "https://i.imgur.com/lWNdCHS.doc"
+      )
+    food.valid?
+    expect(food.errors[:image_url]).to include("must be a URL for GIF, JPG, or PNG image.")
   end
 
   describe "filter name by letter" do 
