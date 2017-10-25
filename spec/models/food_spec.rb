@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe Food do
+
 	it "is valid with a name and description" do
 		expect(build(:food)).to be_valid
 	end
@@ -25,6 +26,10 @@ describe Food do
     expect(food2.errors[:name]).to include("has already been taken")
   end
 
+  it "is valid price" do
+    expect(build(:food)).to be_valid
+  end
+
   it "is invalid with non numerical values price" do
     food = build(:food, price: "100rb")
     food.valid?
@@ -37,42 +42,28 @@ describe Food do
     expect(food.errors[:price]).to include("must be greater than or equal to 0.01")
   end
 
+  it "is valid image_url" do
+    expect(build(:food)).to be_valid
+  end
+
   it "is invalid image url, must be ends with '.gif', '.jpg', and '.png'" do
-    food = Food.new(
-      name: "Nasi uduk",
-      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-      price: 10000.0,
-      image_url: "https://i.imgur.com/lWNdCHS.doc"
-      )
+    food = build(:food, image_url: "https://i.imgur.com/lWNdCHS.doc")
     food.valid?
     expect(food.errors[:image_url]).to include("must be a URL for GIF, JPG, or PNG image.")
   end
 
   describe "filter name by letter" do 
     before :each do 
-      @food1 = Food.create(
-      name: "Nasi uduk",
-      description: "Betawi style steamed rice cooked in coconut milk. Delicious!",
-      price: 10000.0
-      )
-      @food2 = Food.create(
-      name: "Kerak Telor",
-      description: "Betawi traditional spicy omelette made from glutinous rice cooked bla bla bla",
-      price: 8000.0
-      )
-      @food3 = Food.create(
-      name: "Nasi Semur Jengkol",
-      description: "Based on dongfruit, this menu promises i don't know ",
-      price: 8000.0
-      )
+      @food1 = create(:food, name: "Nasi Goreng")
+      @food2 = create(:food, name: "Kerak Telor")
+      @food3 = create(:food, name: "Nasi Semur Jengkol")
     end
 
     context "with matching letter" do
       it "returns a sorted array of results that match" do
-        expect(Food.by_letter("N")).to eq([@food3, @food1])
+        expect(Food.by_letter("N")).to eq([@food1, @food3])
       end
     end
-
     context "with non-matching letter" do
       it "omits results that do not match" do
         expect(Food.by_letter("N")).not_to eq(@food2)
@@ -80,7 +71,4 @@ describe Food do
     end
   end 
 
-  it "has a valid factory" do
-    expect(FactoryGirl.build(:food)).to be_valid
-  end
 end
