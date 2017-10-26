@@ -5,4 +5,8 @@ class Buyer < ApplicationRecord
 		message: 'must be valid email format'
 	}
 	validates :phone, numericality: true, length: { in: 9..12 } 
+
+	def self.by_letter(letter)
+		where("name LIKE ?", "#{letter}%").order(:name)
+	end
 end
