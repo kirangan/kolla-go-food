@@ -31,7 +31,7 @@ Food.create!(
     dari kalangan orang tua. Rawon terbuat dari bahan dasar Daging Sapi yang diberi 
     bumbu kluwek sehingga warna bumbu cenderung kehitaman.
     </p>},
-    image_url: "Rawon.jpeg",
+    image_url: "Soto.jpg",
     price: 20000.00
   )
 
@@ -48,24 +48,24 @@ Food.create!(
   )
 
 
-Buyer.delete_all
-Buyer.create!(
-  name: "Steve Jobs",
-  email: "steve@jobs.com",
-  phone: "021021021",
-  address: "Apple boulevard street, 20, Heaven"
-  )
+# Buyer.delete_all
+# Buyer.create!(
+#   name: "Steve Jobs",
+#   email: "steve@jobs.com",
+#   phone: "021021021",
+#   address: "Apple boulevard street, 20, Heaven"
+#   )
 
-Buyer.create!(
-  name: "Bill Gates",
-  email: "bill@gates.com",
-  phone: "031031031",
-  address: "Microsoft street, 19, America"
-  )
+# Buyer.create!(
+#   name: "Bill Gates",
+#   email: "bill@gates.com",
+#   phone: "031031031",
+#   address: "Microsoft street, 19, America"
+#   )
 
-Buyer.create!(
-  name: "Qurin Ainun",
-  email: "qurin@ainun.com",
-  phone: "03210321",
-  address: "Taman Tanah Abang III street, 15, Central Jakarta"
-  )
+# Buyer.create!(
+#   name: "Qurin Ainun",
+#   email: "qurin@ainun.com",
+#   phone: "03210321",
+#   address: "Taman Tanah Abang III street, 15, Central Jakarta"
+#   )
