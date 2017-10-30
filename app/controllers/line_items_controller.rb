@@ -1,6 +1,7 @@
 class LineItemsController < ApplicationController
 	include CurrentCart
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :show]
+
 
   def create
     food = Food.find(params[:food_id])
@@ -16,4 +17,6 @@ class LineItemsController < ApplicationController
       end
     end
   end
+
+  
 end
