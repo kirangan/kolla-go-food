@@ -18,19 +18,29 @@ describe Cart do
     expect { cart.destroy }.to change { LineItem.count }.by(-2)
   end
 
-  it "does not change the number of line_item if the same food is added" do
-    cart = create(:cart)
-    food = create(:food, name: "Nasi Uduk")
-    line_item = create(:line_item, food: food, cart: cart)
+  context "with existing line_item with the same food" do
+    before :each do
+      @cart = create(:cart)
+      @food = create(:food)
+      @line_item = create(:line_item, food: @food, cart: @cart)
+    end
 
-    expect{ cart.add_food(food) }.not_to change(LineItem, :count)
+    it "does not save the new line_item in the database" do
+      expect { @cart.add_food(@food).save }.not_to change(LineItem, :count)
+    end
+
+    it "increments the quantity of line_item with the same food" do
+      expect { @cart.add_food(@food).save }.to change {
+        @cart.line_items.find_by(food_id: @food.id).quantity
+      }.by(1)
+    end
   end
 
-  it "increment the quantity of line_item if the same food is added" do
-    cart = create(:cart)
-    food = create(:food, name: "Nasi Uduk")
-    line_item = create(:line_item, food: food, cart: cart)
-
-    expect( cart.add_food(food).quantity).to eq(2)
+  context "without existing line_item with the same food" do
+    it "saves the new line_item in the database" do
+      cart = create(:cart)
+      food = create(:food)
+      expect { cart.add_food(food).save }.to change(LineItem, :count).by(1)
+    end
   end
 end
