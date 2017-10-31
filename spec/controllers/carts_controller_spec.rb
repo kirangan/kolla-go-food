@@ -123,6 +123,12 @@ RSpec.describe CartsController, type: :controller do
     end
   end
 
+  describe 'GET #edit' do
+    it "assigns the requested category to @category" do
+      
+    end
+  end
+
   describe "DELETE #destroy" do
     it "destroys the requested cart" do
       cart = Cart.create! valid_attributes

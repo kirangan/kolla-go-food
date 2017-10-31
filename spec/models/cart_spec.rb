@@ -34,6 +34,24 @@ describe Cart do
     expect(cart.add_food(food).quantity).to eq(2)
   end
 
+  context "with existing line_item with the same food" do
+    before :each do
+      @cart = create(:cart)
+      @food = create(:food)
+      @line_item = create(:line_item, food: @food, cart: @cart)
+    end
+
+    it "does not save the new line_item in the database" do
+      expect { @cart.add_food(@food).save }.not_to change(LineItem, :count)
+    end
+
+    it "increments the quantity of line_item with the same food" do
+      expect { @cart.add_food(@food).save }.to change {
+        @cart.line_items.find_by(food_id: @food.id).quantity
+      }.by(1)
+    end
+  end
+
   it "can calculate total price" do
     cart = create(:cart)
     food_1 = create(:food, name: "Nasi uduk",price:2000)

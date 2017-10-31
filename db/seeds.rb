@@ -17,7 +17,9 @@ Food.create!(
     disajikan dengan ukuran daging yang lebih kecil daripada daging jenis lainnya, misalnya sirloin.
 		</p>},
 	image_url: "Tenderloin.jpg",
-	price: 95000.00
+
+	price: 95000.00,
+
 	)
 
 Food.create!(
@@ -32,7 +34,8 @@ Food.create!(
     bumbu kluwek sehingga warna bumbu cenderung kehitaman.
     </p>},
     image_url: "Soto.jpg",
-    price: 20000.00
+    price: 20000.00,
+ 
   )
 
 Food.create!(
@@ -44,8 +47,29 @@ Food.create!(
     dari kaldu daging dan sayuran. Daging yang paling sering digunakan adalah daging sapi dan aya
     </p>},
     image_url: "Soto.jpg",
-    price: 30000.00
+    price: 30000.00,
+
   )
+
+Food.create!(
+  name: "Soto 2",
+  description:
+  %{<p>
+    <em>Soto Enak</em>
+    Soto, sroto, sauto, tauto, atau coto adalah makanan khas Indonesia seperti sop yang terbuat 
+    dari kaldu daging dan sayuran. Daging yang paling sering digunakan adalah daging sapi dan aya
+    </p>},
+    image_url: "Soto.jpg",
+    price: 30000.00,
+
+  )
+
+# Category.delete_all
+
+# Category.create!(name: "pedas")
+# Category.create!(name: "manis")
+# Category.create!(name: "asam")
+
 
 
 # Buyer.delete_all
