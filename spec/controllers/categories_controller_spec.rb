@@ -56,6 +56,107 @@ describe CategoriesController do
       expect(assigns(:category)).to eq category
     end
 
-    it "renders the :edit template"
+    it "renders the :edit template" do
+      category = create(:category)
+      get :edit, params: { id: category }
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'POST #create' do
+    context "with valid attributes" do
+      it "saves the new category in the database" do
+        expect{
+          post :create, params: { category: attributes_for(:category) }
+        }.to change(Category, :count).by(1)
+      end
+
+      it "redirects to categories#show" do
+        post :create, params: { category: attributes_for(:category) }
+        expect(response).to redirect_to(category_path(assigns[:category]))
+      end
+    end
+
+    context "with invalid attributes" do
+      it "does not save the new category in the database" do
+        expect{
+          post :create, params: { category: attributes_for(:invalid_category)}
+          }.not_to change(Category, :count)
+      end
+
+      it "re-renders the :new template" do
+        post :create, params: { category: attributes_for(:invalid_category) }
+        expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    before :each do
+      @category = create(:category)
+    end
+
+    context "with valid attributes" do
+      it "locates the requested @category" do
+        patch :update, params: { id: @category, category: attributes_for(:category) }
+        expect(assigns(:category)).to eq @category
+      end
+
+      it "changes @category's attributes" do
+        patch :update, params: { id: @category, category: attributes_for(:category, name: 'Dessert') }
+        @category.reload
+        expect(@category.name).to eq('Dessert')
+      end
+
+      it "redirects to the category" do
+        patch :update, params: { id: @category, category: attributes_for(:category) }
+        expect(response).to redirect_to @category
+      end
+    end
+
+    context "with invalid attributes" do
+      it "does not update the category in the database" do
+        patch :update, params: { id: @category, category: attributes_for(:category, name: nil) }
+        @category.reload
+        expect(@category.name).not_to eq(nil)
+      end
+
+      it "re-renders the :edit template" do
+        patch :update, params: { id: @category, category: attributes_for(:invalid_category) }
+        expect(response).to render_template :edit
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      before :each do
+        @category = create(:category)
+      end
+
+      context "with associated foods" do
+        it "does not delete the category from the database" do
+          food = create(:food, category: @category)
+          expect{
+            delete :destroy, params: { id: @category }
+          }.not_to change(Category, :count)
+        end
+      end
+
+      context "without associated foods" do
+        it "deletes the category from the database" do
+          expect{
+            delete :destroy, params: { id: @category }
+          }.to change(Category, :count).by(-1)
+        end
+
+        it "redirects to categories#index" do
+          delete :destroy, params: { id: @category }
+          expect(response).to redirect_to categories_url
+        end
+      end
+
+        
+
+    end
+
   end
 end

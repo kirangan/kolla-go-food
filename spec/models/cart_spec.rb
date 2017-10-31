@@ -69,4 +69,5 @@ describe Cart do
 
     expect(cart.total_price).to eq(45000.0)
   end
+
 end
