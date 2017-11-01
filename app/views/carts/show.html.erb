@@ -1,10 +1,6 @@
 <p id="notice"><%= notice %></p>
 <h2>Your Cart</h2>
-
-<table>
-	<%= render (@cart.line_items) %>
-	<%= render @cart %>
-</table>
+<%= render @cart %>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
 <%= link_to 'Back', store_index_path %>
