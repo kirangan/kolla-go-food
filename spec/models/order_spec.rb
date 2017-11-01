@@ -30,7 +30,7 @@ describe Order do
   it "is invalid with email not in valid email format" do
     order = build(:order, email: 'email')
     order.valid?
-    expect(order.errors[:email]).to include("invalid format")
+    expect(order.errors[:email]).to include("must be valid email format")
   end
 
   it "is invalid without a payment_type" do
@@ -38,4 +38,9 @@ describe Order do
     order.valid?
     expect(order.errors[:payment_type]).to include("can't be blank")
   end
+
+  it "is invalid with wrong payment_type" do
+    expect{ build(:order, payment_type: "Grab Pay") }.to raise_error(ArgumentError)
+  end
+  
 end
