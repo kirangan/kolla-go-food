@@ -9,6 +9,17 @@ describe CategoriesController do
       expect(assigns(:categories)).to match_array([dessert, main_course])
     end
 
-    
+    it "renders the :index template" do
+      get :index
+      expect(response).to render_template :index
+    end
+  end
+
+  describe 'GET #show' do
+    it "assigns the requested category to @category" do
+      category = create(:category)
+      get :show, params: { id: category }
+      expect(assigns[:category]).to eq category
+    end
   end
 end
