@@ -43,4 +43,15 @@ describe Cart do
       expect { cart.add_food(food).save }.to change(LineItem, :count).by(1)
     end
   end
+
+  it "can calculate total_price" do
+    cart = create(:cart)
+    food1 = create(:food, name: "Nasi Uduk", price: 10000.0)
+    food2 = create(:food, name: "Nasi Goreng", price: 20000.0)
+    line_item1 = create(:line_item, quantity: 1, food: food1, cart: cart)
+    line_item2 = create(:line_item, quantity: 2, food: food2, cart: cart)
+
+    expect(cart.total_price).to eq(50000)
+  end 
+
 end
