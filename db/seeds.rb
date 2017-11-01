@@ -5,6 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+pedas = Category.create!(name: "pedas")
+manis = Category.create!(name: "manis")
+
 Food.delete_all
 
 Food.create!(
@@ -17,7 +21,8 @@ Food.create!(
     disajikan dengan ukuran daging yang lebih kecil daripada daging jenis lainnya, misalnya sirloin.
 		</p>},
 	image_url: "Tenderloin.jpg",
-	price: 95000.00
+	price: 95000.00,
+  category_id: pedas.id
 	)
 
 Food.create!(
@@ -32,7 +37,8 @@ Food.create!(
     bumbu kluwek sehingga warna bumbu cenderung kehitaman.
     </p>},
     image_url: "Soto.jpg",
-    price: 20000.00
+    price: 20000.00,
+    category_id: manis.id
   )
 
 Food.create!(
@@ -44,7 +50,8 @@ Food.create!(
     dari kaldu daging dan sayuran. Daging yang paling sering digunakan adalah daging sapi dan aya
     </p>},
     image_url: "Soto.jpg",
-    price: 30000.00
+    price: 30000.00,
+    category_id: pedas.id
   )
 
 
