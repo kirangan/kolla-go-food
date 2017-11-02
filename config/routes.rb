@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :orders
   resources :foods
+  resources :users
   root 'store#index', as: 'store_index'
   get 'home/hello'
 
