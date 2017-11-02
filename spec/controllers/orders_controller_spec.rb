@@ -80,6 +80,11 @@ describe OrdersController do
   end
 
   describe 'POST #create' do
+    before :each do
+      @cart = create(:cart)
+      session[:cart_id] = @cart.id
+    end
+    
     context "with valid attributes" do
       it "saves the new order in the database" do
         expect{
@@ -94,82 +99,82 @@ describe OrdersController do
         }.to change(Cart, :count).by(-1)
       end
 
-      # it "removes the cart from session's params" do
-      #   post :create, params: { order: attributes_for(:order) }
-      #   expect(session[:cart_id]).to eq(nil)
-      # end
+      it "removes the cart from session's params" do
+        post :create, params: { order: attributes_for(:order) }
+        expect(session[:cart_id]).to eq(nil)
+      end
 
-      # it "redirects to store index page" do
-      #   post :create, params: { order: attributes_for(:order) }
-      #   expect(response).to redirect_to store_index_url
-      # end
+      it "redirects to store index page" do
+        post :create, params: { order: attributes_for(:order) }
+        expect(response).to redirect_to store_index_url
+      end
     end
 
-    # context "with invalid attributes" do
-    #   it "does not save the new order in the database" do
-    #     expect{
-    #      post :create, params: { order: attributes_for(:invalid_order) }
-    #      }.not_to change(Order, :count)
-    #   end
+    context "with invalid attributes" do
+      it "does not save the new order in the database" do
+        expect{
+         post :create, params: { order: attributes_for(:invalid_order) }
+         }.not_to change(Order, :count)
+      end
 
-    #   it "re-renders the :new template" do
-    #     post :create, params: { order: attributes_for(:invalid_order) }
-    #     expect(response).to render_template :new
-    #   end
-    # end
+      it "re-renders the :new template" do
+        post :create, params: { order: attributes_for(:invalid_order) }
+        expect(response).to render_template :new
+      end
+     end
   end
 
-  # describe 'PATCH #update' do
-  #   before :each do
-  #     @order = create(:order)
-  #   end 
+  describe 'PATCH #update' do
+    before :each do
+      @order = create(:order)
+    end 
 
-  #   context "with valid attributes" do
-  #     it "locates the requested @order" do
-  #       patch :update, params: { id: @order, order: attributes_for(:order) }
-  #       expect(assigns(:order)).to eq @order
-  #     end
+    context "with valid attributes" do
+      it "locates the requested @order" do
+        patch :update, params: { id: @order, order: attributes_for(:order) }
+        expect(assigns(:order)).to eq @order
+      end
 
-  #     it "changes @order's attributes" do
-  #       patch :update, params: { id: @order, order: attributes_for(:order, name: 'Steve Jobs') }
-  #       @order.reload
-  #       expect(@order.name).to eq('Steve Jobs')
-  #     end
+      it "changes @order's attributes" do
+        patch :update, params: { id: @order, order: attributes_for(:order, name: 'Steve Jobs') }
+        @order.reload
+        expect(@order.name).to eq('Steve Jobs')
+      end
 
-  #     it "redirects to the order" do
-  #       patch :update, params: { id: @order, order: attributes_for(:order) }
-  #       expect(response).to redirect_to @order
-  #     end
-  #   end
+      it "redirects to the order" do
+        patch :update, params: { id: @order, order: attributes_for(:order) }
+        expect(response).to redirect_to @order
+      end
+     end
 
-  #   context "with invalid attributes" do
-  #     it "does not update the order in the database" do
-  #       patch :update, params: { id: @order, order: attributes_for(:order, name: "Steve Jobs", address: nil) }
-  #       @order.reload
-  #       expect(@order.name).not_to eq("Steve Jobs")
-  #     end
+    context "with invalid attributes" do
+      it "does not update the order in the database" do
+        patch :update, params: { id: @order, order: attributes_for(:order, name: "Steve Jobs", address: nil) }
+        @order.reload
+        expect(@order.name).not_to eq("Steve Jobs")
+      end
 
-  #     it "re-renders the :edit template" do
-  #       patch :update, params: { id: @order, order: attributes_for(:invalid_order) }
-  #       expect(response).to render_template :edit
-  #     end
-  #   end
-  # end
+      it "re-renders the :edit template" do
+        patch :update, params: { id: @order, order: attributes_for(:invalid_order) }
+        expect(response).to render_template :edit
+      end
+     end
+   end
 
-  # describe 'DELETE #destroy' do
-  #   before :each do
-  #     @order = create(:order)
-  #   end
+  describe 'DELETE #destroy' do
+    before :each do
+      @order = create(:order)
+    end
 
-  #   it "deletes the order from the database" do
-  #     expect{
-  #       delete :destroy, params: { id: @order }
-  #     }.to change(Order, :count).by(-1)
-  #   end
+    it "deletes the order from the database" do
+      expect{
+        delete :destroy, params: { id: @order }
+      }.to change(Order, :count).by(-1)
+    end
 
-  #   it "redirects to orders#index" do
-  #     delete :destroy, params: { id: @order }
-  #     expect(response).to redirect_to orders_url
-  #   end
-  # end
+    it "redirects to orders#index" do
+      delete :destroy, params: { id: @order }
+      expect(response).to redirect_to orders_url
+    end
+   end
 end
