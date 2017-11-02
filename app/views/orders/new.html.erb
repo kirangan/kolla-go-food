@@ -1,5 +1,8 @@
-<h1>New Buyer</h1>
+<div class="go_food_form">
+  <fieldset>
+    <legend>Please Enter Your Details</legend>
+    <%= render 'form', order: @order %>
+  </fieldset>
+</div>
 
-<%= render 'form', buyer: @buyer %>
-
-<%= link_to 'Back', buyers_path %>
+<%= link_to 'Back', orders_path %>

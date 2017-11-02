@@ -1,10 +1,10 @@
-<%= form_with(model: buyer, local: true) do |form| %>
-  <% if buyer.errors.any? %>
+<%= form_for(order) do |form| %>
+  <% if order.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(buyer.errors.count, "error") %> prohibited this buyer from being saved:</h2>
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
 
       <ul>
-      <% buyer.errors.full_messages.each do |message| %>
+      <% order.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -13,25 +13,25 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :buyer_name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_field :phone, id: :buyer_phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email, id: :buyer_email %>
+    <%= form.text_field :name, size: 40 %>
   </div>
 
   <div class="field">
     <%= form.label :address %>
-    <%= form.text_area :address, id: :buyer_address %>
+    <%= form.text_area :address, rows: 3, cols: 60 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email, size: 40 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :payment_type %>
+    <%= form.select :payment_type, Order.payment_types.keys, prompt: "Select a payment type" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Place Order" %>
   </div>
 <% end %>

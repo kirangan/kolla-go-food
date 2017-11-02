@@ -1,24 +1,16 @@
 <p id="notice"><%= notice %></p>
+<h1>Orders Detail</h1>
 
-<p>
-  <strong>Name:</strong>
-  <%= @buyer.name %>
-</p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @buyer.phone %>
-</p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @buyer.email %>
-</p>
+<table>
+  <%= render (@order.line_items) %>
+  <tr class="total_line">
+      <td colspan="2">Total</td>
+      <td class="total_cell"><%= number_to_currency(@order.total_price, unit: "Rp ", delimiter: ".", separator:",") %></td>
+  </tr>
+</table>
 
-<p>
-  <strong>Address:</strong>
-  <%= @buyer.address %>
-</p>
 
-<%= link_to 'Edit', edit_buyer_path(@buyer) %> |
-<%= link_to 'Back', buyers_path %>
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>

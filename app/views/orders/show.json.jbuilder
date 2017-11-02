@@ -1,1 +1,1 @@
-json.partial! "buyers/buyer", buyer: @buyer
+json.partial! "orders/order", order: @order

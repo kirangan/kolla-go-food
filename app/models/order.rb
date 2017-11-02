@@ -21,4 +21,7 @@ class Order < ApplicationRecord
     end
   end
 
+  def total_price
+    line_items.reduce(0) { |sum, line_items| sum + line_items.total_price }
+  end
 end
