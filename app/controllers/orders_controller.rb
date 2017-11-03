@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
-  include CurrentCart
   skip_before_action :authorize, only: [:new, :create]
+  include CurrentCart
+  
   before_action :set_cart, only: [:new, :create]
   before_action :set_order, only: [:show, :edit, :update, :destroy]
   before_action :cart_not_empty, only: [:new]
@@ -27,8 +28,9 @@ class OrdersController < ApplicationController
     respond_to do |format|
       if @order.save
         Cart.destroy(session[:cart_id])
-        #@cart.destroy
         session[:cart_id] = nil
+
+        OrderMailer.received(@order).deliver!
 
         format.html { redirect_to store_index_url, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }       
