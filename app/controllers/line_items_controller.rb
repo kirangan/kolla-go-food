@@ -1,5 +1,6 @@
 class LineItemsController < ApplicationController
 	include CurrentCart
+  skip_before_action :authorize, only: :create
   before_action :set_cart, only: [:create]
 
   def create
@@ -8,7 +9,8 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.html { redirect_to @line_item.cart, notice: 'Line item was successfully' }
+        format.html { redirect_to store_index_url, notice: 'Line item was successfully' }
+        format.js { @current_item = @line_item }
         format.json { render :show, status: :created, location: @line_item }
       else
         format.html { render :new }

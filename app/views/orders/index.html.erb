@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+
+<table>
+    <% @orders.each do |order| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+        <td class="list_description">
+          <dl>
+            <dd>Id: <%= order.id %></dd>
+            <dd>Name: <%= order.name %></dd>
+            <dd>Address: <%= order.address %></dd>
+            <dd>Email: <%= order.email %></dd>
+            <dd>Payment Type: <%= order.payment_type %></dd>
+            <dd>Total Price: <%= order.total_price%> </dd>
+            
+          </dl>
+        </td>
+        <td class="list_actions">
+          <%= link_to 'Show', order %><br/>
+          <%= link_to 'Edit', edit_order_path(order) %><br/>
+          <%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
+          </td>
+      </tr>
+    <% end %>
+</table>
+
+<br>
+
+<%= link_to 'New Order', new_order_path %>
