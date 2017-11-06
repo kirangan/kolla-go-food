@@ -65,4 +65,10 @@ describe Order do
     end
   end
 
+  describe "total_price" do
+    before :each do
+      @cart = create(:cart)
+      @
+    end
+  end
 end

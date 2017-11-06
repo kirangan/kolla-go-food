@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102065420) do
+ActiveRecord::Schema.define(version: 20171106073337) do
 
   create_table "buyers", force: :cascade do |t|
     t.string "name"
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(version: 20171102065420) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.string "code_name"
+    t.datetime "valid_from"
+    t.datetime "valid_through"
+    t.decimal "amount"
+    t.integer "unit"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "max_amount"
   end
 
 end

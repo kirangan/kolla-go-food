@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :foods
   resources :users
   resources :buyers
+  resources :vouchers
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
