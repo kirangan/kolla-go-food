@@ -1,6 +1,11 @@
 require 'rails_helper'
 
 describe OrdersController do
+  before :each do
+    user = create(:user)
+    session[:user_id] = user.id
+  end
+
   it "includes CurrentCart" do
     expect(OrdersController.ancestors.include? CurrentCart).to eq(true)
   end
@@ -107,6 +112,12 @@ describe OrdersController do
       it "redirects to store index page" do
         post :create, params: { order: attributes_for(:order) }
         expect(response).to redirect_to store_index_url
+      end
+
+      it "sends order confirmation email" do
+        expect{
+          post :create, params: { order: attributes_for(:order) }
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
     end
 

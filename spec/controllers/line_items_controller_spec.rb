@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe LineItemsController do
+  
   describe 'POST #create' do
     before :each do
       @food = create(:food)
