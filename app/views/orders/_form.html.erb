@@ -31,6 +31,11 @@
     <%= form.select :payment_type, Order.payment_types.keys, prompt: "Select a payment type" %>
   </div>
 
+  <div class="field">
+    <%= form.label :voucher %> 
+    <%= form.collection_select :voucher_id, Voucher.order(:code_name), :id, :code_name, include_blank: true %>
+  </div>
+
   <div class="actions">
     <%= form.submit "Place Order" %>
   </div>

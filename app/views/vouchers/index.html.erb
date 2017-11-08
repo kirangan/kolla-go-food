@@ -3,19 +3,29 @@
 <h1>Vouchers</h1>
 
 <table>
+  <th>Code Name</th>
+  <th>Valid From</th>
+  <th>Valid Through</th>
+  <th>Amount</th>
+  <th>Unit</th>
+  <th>Max Amount</th>
+
     <% @vouchers.each do |voucher| %>
-      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
-        <td class="list_description">
-          <dl>
-            
-            <dd><%= voucher.code_name%></dd>
-          </dl>
-        </td>
-        <td class="list_actions">
-          <%= link_to 'Show', voucher %><br/>
-          <%= link_to 'Edit', edit_voucher_path(voucher) %><br/>
-          <%= link_to 'Destroy', voucher, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
-          </td>
+     <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+      <td><%= voucher.code_name %></td>
+      <td><%= voucher.valid_from %></td>
+      <td><%= voucher.valid_through %></td>
+      <td><%= voucher.amount %></td>
+      <td><%= voucher.unit %></td>
+      <td><%= voucher.max_amount %></td>
+
+      <td class="list_actions">
+        <%= link_to 'Show', voucher %>
+        <%= link_to 'Edit', edit_voucher_path(voucher) %>
+        <%= link_to 'Destroy', voucher, method: :delete, data: { confirm: 'Are you sure?' } %><br/>
+      </td>
+      
       </tr>
     <% end %>
 </table>

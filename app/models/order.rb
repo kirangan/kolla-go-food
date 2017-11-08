@@ -1,6 +1,9 @@
 class Order < ApplicationRecord
+  #attr_accessor :voucher
   has_many :line_items, dependent: :destroy
-  
+  belongs_to :voucher
+
+
   enum payment_type: {
     "Cash" => 0,
     "Go Pay" => 1,
@@ -14,6 +17,7 @@ class Order < ApplicationRecord
   }
   validates :payment_type, inclusion: payment_types.keys
 
+
   def add_line_items(cart)
     cart.line_items.each do |item|
       item.cart_id = nil
@@ -21,9 +25,32 @@ class Order < ApplicationRecord
     end
   end
 
-  def total_price
-    line_items.reduce(0) { |sum, line_items| sum + line_items.total_price }
+  def sub_total_price
+     line_items.reduce(0) { |sum, line_items| sum + line_items.total_price }
   end
 
+  def discount
+    discount = 0
+    if voucher.unit == "Percent"
+      total = sub_total_price * voucher.amount * 0.01
+      if total > voucher.max_amount
+        discount = voucher.max_amount
+      else
+        discount = total
+      end
+
+    else
+      discount = voucher.amount
+    end
+    discount
+  end
+
+  def total_price
+    if voucher.nil?
+      sub_total_price
+    else
+      sub_total_price - discount
+    end
+  end
 
 end

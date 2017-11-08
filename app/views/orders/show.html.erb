@@ -7,8 +7,16 @@
   <%= render (@order.line_items) %>
   <tr class="total_line">
       <td colspan="2">Total</td>
-      <td class="total_cell"><%= number_to_currency(@order.total_price, unit: "Rp ", delimiter: ".", separator:",") %></td>
+      <td class="total_cell"><%= number_to_currency(@order.sub_total_price, unit: "Rp ", delimiter: ".", separator:",") %></td>
   </tr>
+  <tr>
+      <td colspan="2">Discount</td>
+      <td><%= number_to_currency(@order.discount, unit: "Rp ", delimiter: ".", separator:",") %></td>
+  </tr>
+  <tr>
+      <td colspan="2">Total Price</td>
+      <td><%= number_to_currency(@order.total_price, unit: "Rp ", delimiter: ".", separator:",") %></td>
+  </tr> 
 </table>
 
 

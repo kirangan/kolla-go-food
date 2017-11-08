@@ -1,7 +1,9 @@
 class VouchersController < ApplicationController
   skip_before_action :authorize
   before_action :set_voucher, only: [:show, :edit, :update, :destroy]
-  before_action :set_upcase, only: [:create, :update]
+  #before_action :set_upcase, only: [:create, :update]
+  
+  
 
   def index
     @vouchers = Voucher.all
@@ -62,7 +64,5 @@ class VouchersController < ApplicationController
     params.require(:voucher).permit(:code_name, :valid_from, :valid_through, :amount, :unit, :max_amount)
   end
 
-  def set_upcase
-    params[:voucher][:code_name].upcase!
-  end
+  
 end

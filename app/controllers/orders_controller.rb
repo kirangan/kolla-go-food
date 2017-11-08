@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
 
-        OrderMailer.received(@order).deliver!
+       # OrderMailer.received(@order).deliver!
 
         format.html { redirect_to store_index_url, notice: 'Order was successfully created.' }
         format.json { render :show, status: :created, location: @order }       
@@ -67,7 +67,7 @@ class OrdersController < ApplicationController
   end
     
   def order_params
-    params.require(:order).permit(:name, :address, :email, :payment_type, :voucher)
+    params.require(:order).permit(:name, :address, :email, :payment_type, :voucher_id)
   end
 
   def cart_not_empty
