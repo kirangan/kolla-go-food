@@ -65,29 +65,6 @@ describe Order do
     end
   end
 
-  # describe "in total_price" do
-
-  #   context "with voucher" do
-  #     it "save total_price with discount when discount is greater than max_amount" do
-  #       order = create(:order)
-  #       cart = create(:cart)
-  #       food1 = create(:food, name: "Food 1", price: 10000.0)
-  #       food2 = create(:food, name: "Food 2", price: 15000.0)
-  #       line_item1 = create(:line_item, quantity: 3, food: food1, cart: cart)
-  #       line_item2 = create(:line_item, quantity: 1, food: food2, cart: cart)
-
-  #       voucher = create(:voucher, amount: 10.0, unit: "Percent", max_amount: 10000, order: order )
-
-  #       expect(order.total_price).to eq()
-  #     end
-
-  #     it "save total_price with discount" do
-  #       order = create(:order)
-  #       voucher = create(:voucher, amount: 10.0, unit: "Percent", max_amount: 15000)
-  #     end
-  #   end
-  # end
-
   describe "adding discount to order" do
     context "with valid voucher" do
       before :each do
@@ -137,10 +114,9 @@ describe Order do
 
       context "with invalid voucher" do
         it "is invalid with invalid voucher" do
-          order = create(:order)
-          voucher = create(:voucher, voucher_id: nil, order: order)
-          voucher.valid?  
-          expect(voucher.errors[:voucher_id]).to include("")
+          order = build(:order, voucher_id: nil)
+          order.valid?  
+          expect(order.errors[:voucher_id]).to include("Voucher is not exist")
         end
       end
 

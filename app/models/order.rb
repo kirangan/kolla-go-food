@@ -1,8 +1,7 @@
 class Order < ApplicationRecord
   #attr_accessor :voucher
   has_many :line_items, dependent: :destroy
-  belongs_to :voucher
-
+  belongs_to :voucher, optional: true
 
   enum payment_type: {
     "Cash" => 0,
@@ -16,7 +15,11 @@ class Order < ApplicationRecord
     message: 'must be valid email format'
   }
   validates :payment_type, inclusion: payment_types.keys
-
+  validates_each :voucher_id do |record, attr, value|
+    if record.voucher_id.nil?
+      record.errors.add(attr, "Voucher is not exist")
+    end
+  end
 
   def add_line_items(cart)
     cart.line_items.each do |item|
@@ -52,5 +55,6 @@ class Order < ApplicationRecord
       sub_total_price - discount
     end
   end
+
 
 end
