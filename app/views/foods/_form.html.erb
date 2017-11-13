@@ -33,7 +33,19 @@
 
   <div class="field">
     <%= form.label :category %>
-    <%= form.collection_select :category_id, Category.order(:name), :id, :name, include_blank: true %>
+    <%= form.collection_select :category_id, Category.order(:name), :id, :name, prompt: "Select a Category" %>
+  </div>
+
+  <div class="field">
+    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |x|%>
+    <%= x.label %>
+    <%= x.check_box %>
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= form.label :restaurant %>
+    <%= form.collection_select :restaurant_id, Restaurant.order(:name), :id, :name, prompt: "Select a Restaurant" %>
   </div>
 
   <div class="actions">

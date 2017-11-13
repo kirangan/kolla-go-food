@@ -9,6 +9,16 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.all
+
+    if params[:name_s] || params[:address_s] || params[:email_s] || params[:min_price] 
+
+      @orders = Order.where('name Like ? AND address Like ? AND email Like ? AND total_price > ?' , "%#{params[:name_s]}%", "%#{params[:address_s]}%", "%#{params[:email_s]}%", "#{params[:min_price].to_i}")
+      if !(params[:max_price].empty?)
+        @orders = @orders.where( 'total_price < ?',"#{params[:max_price].to_i}")
+      end
+
+    end
+
   end
 
   def show
@@ -24,7 +34,8 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order.add_line_items(@cart)
-
+    @order.total_price = @order.total
+   
     respond_to do |format|
       if @order.save
         Cart.destroy(session[:cart_id])
@@ -67,7 +78,7 @@ class OrdersController < ApplicationController
   end
     
   def order_params
-    params.require(:order).permit(:name, :address, :email, :payment_type, :voucher_id)
+    params.require(:order).permit(:name, :address, :email, :payment_type, :voucher_id, :total_price, :name_s, :address_s, :email_s, :min_price, :max_price)
   end
 
   def cart_not_empty

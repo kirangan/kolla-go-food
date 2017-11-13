@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Review</h1>
+
+<table>
+    <th>Name</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Reviewable Type</th>
+    <th>Reviewable ID</th>
+
+
+    <% @reviews.each do |review| %>
+      <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+
+            <td><%= review.name %></td>
+            <td><%= review.title %></td>
+            <td><%= review.description %></td>
+            <td><%= review.reviewable_type %></td>
+            <td><%= review.reviewable_id %> </td>
+
+          <td class="list_actions">
+          <%= link_to 'Show', review %>
+          <%= link_to 'Edit', edit_review_path(review) %>
+          <%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+      </tr>
+    <% end %>
+</table>
+

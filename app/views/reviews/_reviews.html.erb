@@ -1,0 +1,10 @@
+<h3>Review</h3>
+<% reviewable.reviews.each do |review| %>
+  <p>
+    <hr>
+    <%= review.name %> <br />
+    <%= review.title %> <br />
+    <%= review.description %> 
+    <em><%= time_ago_in_words review.created_at %></em>
+  </p>
+<% end %>

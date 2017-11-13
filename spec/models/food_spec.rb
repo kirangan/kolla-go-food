@@ -81,4 +81,8 @@ describe Food do
     expect { food.destroy }.not_to change(Food, :count)
   end
 
+  describe "relations" do
+    it { should have_and_belong_to_many(:tags) }
+    it { belong_to(:category) }
+  end
 end

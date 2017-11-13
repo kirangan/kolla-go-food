@@ -9,7 +9,7 @@ class Order < ApplicationRecord
     "Credit Cart" => 2
   }
 
-  validates :name, :address, :email, :payment_type, presence: true
+  #validates :name, :address, :email, :payment_type, presence: true
   validates :email, format: {
     with: /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i,
     message: 'must be valid email format'
@@ -48,7 +48,7 @@ class Order < ApplicationRecord
     discount
   end
 
-  def total_price
+  def total
     if voucher.nil?
       sub_total_price
     else

@@ -6,7 +6,16 @@ class FoodsController < ApplicationController
   # GET /foods.json
   def index
     @foods = params[:letter].nil? ? Food.all : Food.by_letter(params[:letter])
-  end
+
+    if params[:name_s] || params[:description_s] || params[:min_price] 
+        
+       @foods = Food.where('name Like ? AND description Like ? AND price > ?', "%#{params[:name_s]}%", "%#{params[:description_s]}%", "#{params[:min_price].to_i}")
+       
+      if !(params[:max_price].empty?)
+        @foods = @foods.where( 'price < ?',"#{params[:max_price].to_i}")
+      end 
+    end
+end
 
   # GET /foods/1
   # GET /foods/1.json
@@ -73,6 +82,6 @@ class FoodsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def food_params
-      params.require(:food).permit(:name, :description, :image_url, :price, :category_id)
+      params.require(:food).permit(:name, :description, :image_url, :price, :category_id, :restaurant_id , :name_s, :description_s, :min_price, :max_price, tag_ids: [])
     end
 end

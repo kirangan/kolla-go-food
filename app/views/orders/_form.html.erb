@@ -36,6 +36,7 @@
     <%= form.collection_select :voucher_id, Voucher.order(:code_name), :id, :code_name, include_blank: true %>
   </div>
 
+ 
   <div class="actions">
     <%= form.submit "Place Order" %>
   </div>
